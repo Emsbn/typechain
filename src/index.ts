@@ -1,6 +1,6 @@
 class Human {
   public name: string;
-  private age: number;
+  public age: number;
   public gender: string;
   constructor(name: string, age: number, gender: string) {
     this.name = name;
@@ -12,7 +12,9 @@ class Human {
 const lynn = new Human("Lynn", 18, "female");
 
 const sayHi = (person: Human): string => {
-  return `Hello ${person.name}, you ar ${person}, you are a ${person.gender}`;
+  return `Hello ${person.name}, you ar ${person.age}, you are a ${
+    person.gender
+  }`;
 };
 
 console.log(sayHi(lynn));
