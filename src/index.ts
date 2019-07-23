@@ -13,7 +13,7 @@ class Block {
     timestamp: number,
     data: string
   ): string =>
-    CryptoJS.SH256(index + previousHash + timestamp + data).toString();
+    CryptoJS.SHA256(index + previousHash + timestamp + data).toString();
 
   constructor(
     index: number,
@@ -40,6 +40,26 @@ const getLatestBlock = (): Block => blockchain[blockchain.length - 1];
 
 const getNewTimestamp = (): number => Math.round(new Date().getTime() / 1000);
 
-console.log(blockchain);
+const createNewBlock = (data: string): Block => {
+  const previousBlock: Block = getLatestBlock();
+  const newIndex: number = previousBlock.index + 1;
+  const newTimestamp: number = getNewTimestamp();
+  const newHash: string = Block.calculateBlockHash(
+    newIndex,
+    previousBlock.hash,
+    newTimestamp,
+    data
+  );
+  const newBlock: Block = new Block(
+    newIndex,
+    newHash,
+    previousBlock.hash,
+    data,
+    newTimestamp
+  );
+  return newBlock;
+};
+
+console.log(createNewBlock("hello"), createNewBlock("bye bye"));
 
 export {};
